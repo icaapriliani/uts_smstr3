@@ -145,8 +145,8 @@ function showCart(){
             <div class="d-flex justify-content-between align-items-center border-bottom py-2">
             <div>${item.name} x ${item.qty}</div>
             <div>
-             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', -1)">-</button>
-             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', 1)">+</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', -1)">-</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', 1)">+</button>
 </div>
 </div>`;
     });
@@ -156,3 +156,39 @@ function showCart(){
 const modal=new bootstrap.Modal(document.getElementById("cartModal"));
 modal.show();
 }
+
+//ubah jumlah item di keranjang
+function  changeQty(id, delta) {
+    const item=cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if(item.qty <= 0) cart=cart.filter(i => i.id !== id);
+    updateCartCount();
+    showCart();
+}
+
+
+//hitung total keranjang
+function getCartTotal(){
+    return cart.reduce((sum, i) => sum + i.price *i.qty, 0);
+}
+
+//checkout
+function checkout(){
+    if (cart.length===0){
+        alert("Keranjang kosong.");
+        return;
+    }
+    localStorage.setItem("checkoutCart", JSON.stringify(cart));
+    window.location.href="checkout.html";
+}
+
+function cancelCheckout(){
+    const confirmCancel=confirm("Apakah Anda yakin membatalkan checkout?");
+    if (confirmCancel){
+        window.location.href="produk.html";
+    }
+}
+
+
+
