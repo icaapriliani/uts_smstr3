@@ -111,3 +111,48 @@ if (productlist) {
     });
 });
 }
+
+//tambah ke keranjang
+function addToCart(id){
+    const item=products.find(p => p.id === id);
+    const found=cart.find(i => i.id === id);
+    if (found){
+        found.qty++;
+    } else {
+        cart.push({ ...item, qty:1 });
+    }
+    updateCartCount();
+    alert(`${item.name} telah ditambahkan ke keranjang.`);
+    }
+
+//update jumlah keranjang
+function updateCartCount(){
+    document.getElementById("cartCount").innerText=cart.reduce((a,b) => a+b.qty, 0);
+}
+
+//tampilkan isi keranjang
+function showCart(){
+    const cartItems=document.getElementById("cartItems");
+    const cartTotal=document.getElementById("cartTotal");
+    cartItems.innerHTML="";
+
+    if (cart.length===0){
+        cartItems.innerHTML="<p>Keranjang kosong.</p>";
+        cartTotal.innerText="Rp 0";
+}else {
+    cart.forEach(item => {
+        cartItems.innerHTML += `
+            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div>${item.name} x ${item.qty}</div>
+            <div>
+             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', -1)">-</button>
+             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.id}', 1)">+</button>
+</div>
+</div>`;
+    });
+    cartTotal.innerText=getCartTotal().toLocaleString();
+
+}
+const modal=new bootstrap.Modal(document.getElementById("cartModal"));
+modal.show();
+}
