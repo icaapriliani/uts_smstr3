@@ -25,7 +25,36 @@
       </div>
       </nav>
 
+<!--container checkout-->
+<div class="checkout-container">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h4 class="mb-3">Ringkasan Belanja</h4>
+            <div id="cartSummary" class="cart-summary">
+                <p>Memuat Keranjang...</p>
+            </div>
+            <h5 class="mt-3">Total : Rp <span id="checkoutTotal">o</span></h5>
+        </div>
 
-
+        <div class="col-md-6">
+            <h4 class="mb-3">Data Pembeli</h4>
+            <form id="checkoutForm" onsubmit="submitCheckout(event)" novalidate>
+                <div class="mb3">
+                    <label for="name" class="form-label">Masukkan Nama </label>
+                    <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap Kamu" required>
+                </div>
+                <div class="mb-3">
+            <label for="alamat" class="form-label">Alamat Lengkap</label>
+            <textarea id="alamat" class="form-control" rows="2" placeholder="Masukkan alamat lengkap" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="telepon" class="form-label">Nomor Telepon</label>
+            <div class="input-group">
+                <span class="input-group-text">+62</span>
+                <input type="text" id="telepon" class="form-control" placeholder="85766243578" maxlength="11" pattern="\d{11}" required>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
