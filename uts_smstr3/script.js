@@ -79,22 +79,22 @@ const productlist = document.getElementById("productlist");
 
 if (productlist) {
   //ambil kategori
-  const categories = [...new Set(products.map(p => p.category))];
-  categories.forEach(cat => {
+  const categories = [...new Set(products.map((p) => p.category))];
+  categories.forEach((cat) => {
     //tambah judul kategori
     productlist.innerHTML += `
     <h3 class="mt-2 mb-2 fw-bold border-bottom pb-2">${cat}</h3>
-    <div class="row g-3" id="cat-${cat.replace(/\s+/g, '')}"></div>
+    <div class="row g-3" id="cat-${cat.replace(/\s+/g, "")}"></div>
 `;
 
     const catContainer = document.getElementById(
-      `cat-${cat.replace(/\s+/g, '')}`
+      `cat-${cat.replace(/\s+/g, "")}`
     );
 
     //ambil produk sesuai kategori
     products
-        .filter(p => p.category === cat)
-        .forEach( p => {
+      .filter((p) => p.category === cat)
+      .forEach((p) => {
         catContainer.innerHTML += `
         <div class="col-md-3" id="${p.id}">
         <div class="card shadow-sm h-50">
@@ -103,45 +103,49 @@ if (productlist) {
         <h5 class="card-title ">${p.name}</h5>
         <p class="card-text text-muted ">Rp ${p.price.toLocaleString()}</p>
         <button class="btn btn-primary" onclick="addToCart('${
-        p.id}')">Tambah ke Keranjang</button>
+          p.id
+        }')">Tambah ke Keranjang</button>
         </div>
         </div>
         </div>
         `;
-    });
-});
+      });
+  });
 }
 
 //tambah ke keranjang
-function addToCart(id){
-    const item=products.find(p => p.id === id);
-    const found=cart.find(i => i.id === id);
-    if (found){
-        found.qty++;
-    } else {
-        cart.push({ ...item, qty:1 });
-    }
-    updateCartCount();
-    alert(`${item.name} telah ditambahkan ke keranjang.`);
-    }
+function addToCart(id) {
+  const item = products.find((p) => p.id === id);
+  const found = cart.find((i) => i.id === id);
+  if (found) {
+    found.qty++;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+  updateCartCount();
+  alert(`${item.name} telah ditambahkan ke keranjang.`);
+}
 
 //update jumlah keranjang
-function updateCartCount(){
-    document.getElementById("cartCount").innerText=cart.reduce((a,b) => a+b.qty, 0);
+function updateCartCount() {
+  document.getElementById("cartCount").innerText = cart.reduce(
+    (a, b) => a + b.qty,
+    0
+  );
 }
 
 //tampilkan isi keranjang
-function showCart(){
-    const cartItems=document.getElementById("cartItems");
-    const cartTotal=document.getElementById("cartTotal");
-    cartItems.innerHTML="";
+function showCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartTotal = document.getElementById("cartTotal");
+  cartItems.innerHTML = "";
 
-    if (cart.length===0){
-        cartItems.innerHTML="<p>Keranjang kosong.</p>";
-        cartTotal.innerText="Rp 0";
-}else {
-    cart.forEach(item => {
-        cartItems.innerHTML += `
+  if (cart.length === 0) {
+    cartItems.innerHTML = "<p>Keranjang kosong.</p>";
+    cartTotal.innerText = "Rp 0";
+  } else {
+    cart.forEach((item) => {
+      cartItems.innerHTML += `
             <div class="d-flex justify-content-between align-items-center border-bottom py-2">
             <div>${item.name} x ${item.qty}</div>
             <div>
@@ -150,45 +154,40 @@ function showCart(){
 </div>
 </div>`;
     });
-    cartTotal.innerText=getCartTotal().toLocaleString();
-
-}
-const modal=new bootstrap.Modal(document.getElementById("cartModal"));
-modal.show();
+    cartTotal.innerText = getCartTotal().toLocaleString();
+  }
+  const modal = new bootstrap.Modal(document.getElementById("cartModal"));
+  modal.show();
 }
 
 //ubah jumlah item di keranjang
-function  changeQty(id, delta) {
-    const item=cart.find(i => i.id === id);
-    if (!item) return;
-    item.qty += delta;
-    if(item.qty <= 0) cart=cart.filter(i => i.id !== id);
-    updateCartCount();
-    showCart();
+function changeQty(id, delta) {
+  const item = cart.find((i) => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter((i) => i.id !== id);
+  updateCartCount();
+  showCart();
 }
 
-
 //hitung total keranjang
-function getCartTotal(){
-    return cart.reduce((sum, i) => sum + i.price *i.qty, 0);
+function getCartTotal() {
+  return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 }
 
 //checkout
-function checkout(){
-    if (cart.length===0){
-        alert("Keranjang kosong.");
-        return;
-    }
-    localStorage.setItem("checkoutCart", JSON.stringify(cart));
-    window.location.href="checkout.html";
+function checkout() {
+  if (cart.length === 0) {
+    alert("Keranjang kosong.");
+    return;
+  }
+  localStorage.setItem("checkoutCart", JSON.stringify(cart));
+  window.location.href = "checkout.html";
 }
 
-function cancelCheckout(){
-    const confirmCancel=confirm("Apakah Anda yakin membatalkan checkout?");
-    if (confirmCancel){
-        window.location.href="produk.html";
-    }
+function cancelCheckout() {
+  const confirmCancel = confirm("Apakah Anda yakin membatalkan checkout?");
+  if (confirmCancel) {
+    window.location.href = "produk.html";
+  }
 }
-
-
-
