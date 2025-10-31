@@ -58,7 +58,7 @@ const products = [
   },
   {
     id: "allah-ada",
-    name: "Allah Ada",
+    name: "Allah Itu Ada",
     price: 75000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbxjpX6bYzKFuzHYn3T7dD-vpiNU4k4ehSwQ&s0",
     category: "Novel",
