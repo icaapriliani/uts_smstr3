@@ -45,7 +45,7 @@
 </head>
 
 <body>
-     <!--navbar-->
+    <!--navbar-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
         <div class="container-fluid px-4">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
@@ -53,9 +53,9 @@
                     style="height: 40px; width: auto; margin-right: 8px;">
                 MyBook
             </a>
-             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse show" id="navbarNav">
                 <ul class="navbar-nav ms-auto mt-2 mt-lg-0 gap-2">
@@ -68,7 +68,9 @@
 
                     <!-- Tombol Keranjang pakai Icon -->
                     <li class="nav-item">
-                        <button class="btn btn-outline-dark  d-flex align-items-center justify-content-center w-100 w-lg-auto  position-relative" onclick="showCart()">
+                        <button
+                            class="btn btn-outline-dark  d-flex align-items-center justify-content-center w-100 w-lg-auto  position-relative"
+                            onclick="showCart()">
                             <i class="bi bi-cart3" style="font-size: 1.3rem;"></i>
                             <span id="cartCount"
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -95,7 +97,7 @@
             <div class="col-md-6">
                 <h4 class="mb-3">Data Pembeli</h4>
                 <form id="checkoutForm" onsubmit="submitCheckout(event)" novalidate>
-                    <div class="mb3">
+                    <div class="mb-3">
                         <label for="name" class="form-label">Masukkan Nama </label>
                         <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap Kamu" required>
                     </div>
@@ -113,9 +115,20 @@
                         </div>
                         <small class="text-muted">Masukkan 11 angka setelah +62 (contoh: 81234567890)</small>
                     </div>
+                    <div class="mb-3">
+                        <label for="paymentMethod" class="form-label">Metode Pembayaran</label>
+                        <select id="paymentMethod" class="form-select" required>
+                            <option value="">Pilih Metode Pembayaran</option>
+                            <option value="bank">Transfer Bank</option>
+                            <option value="ewallet">E-Wallet</option>
+                            <option value="cod">Bayar diTempat (COD)</option>
+                        </select>
+                    </div>
+                    <div id="paymentInstructions" class="mt-2 text-muted"></div>
                     <div class="d-flex justify-content-center mt-4 gap-2">
                         <button type="button" class="btn btn-secondary" onclick="cancelCheckout()">Batal</button>
-                        <button type="button" class="btn btn-success" onclick="submitCheckout(event)">Checkout Sekarang</button>
+                        <button type="button" class="btn btn-success" onclick="submitCheckout(event)">Checkout
+                            Sekarang</button>
 
                     </div>
                 </form>
@@ -184,14 +197,20 @@
             const telepon = document.getElementById("telepon").value.trim();
             const total = document.getElementById("checkoutTotal").innerText;
 
-
+            // konfir pembayaran
+            const paymentMethod = document.getElementById("paymentMethod").value;
+            if (!paymentMethod) {
+                alert("Silahkan pilih metode pembayaran.");
+                return;
+            }
             //konfirmasi sebeleum submit
             const konfirmasi = confirm(
                 `Periksa kembali data pesananmu:\n\n` +
                 `Nama: ${nama}\n` +
                 `Alamat: ${alamat}\n` +
                 `Nomor Telepon: +62${telepon}\n` +
-                `Total Pembayaran: Rp ${total}\n\n` +
+                `Total Pembayaran: Rp ${total}\n` +
+                `Metode Pembayaran: ${paymentMethod}\n\n` +
                 `Apakah data sudah benar?`
             );
 
@@ -219,6 +238,21 @@
                 window.location.href = "produk.html";
             }
         }
+        //metode pembayaran
+        document.getElementById("paymentMethod").addEventListener("change", function () {
+            const method = this.value;
+            const instr = document.getElementById("paymentInstructions");
+
+            if (method === "bank") {
+                instr.innerHTML = "silahkan transfer ke rekening BCA 123-456-7890 a.n MyBook";
+            } else if (method === "ewallet") {
+                instr.innerHTML = "silahkan bayar menggunakan OVO/GoPay/Dana ke nomor 085955268537 a.n MyBook";
+            } else if (method === "cod") {
+                instr.innerHTML = "silahkan siapkan uang pas saat barang diantar ke alamat kamu.";
+            } else {
+                instr.innerHTML = "";
+            }
+        });
 
         loadCheckoutData();
     </script>

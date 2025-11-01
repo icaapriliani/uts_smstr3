@@ -33,42 +33,42 @@ const products = [
     name: "Matematika Dasar",
     price: 60000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNd-EVW7NmibvsBKW21nDPtJfMM1tkZZ7BmA&s",
-    category: "Novel",
+    category: "Pendidikan",
   },
   {
     id: "kimia-sma",
     name: "Kimia AMA",
     price: 75000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhE4Gxf8rHAdq2Xp-Fw47aEH6AjKovZZbfQg&s",
-    category: "Novel",
+    category: "Pendidikan",
   },
   {
     id: "fisika-sma",
     name: "Fisika SMA",
     price: 75000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCKaRAmmr5yWd354EPyBUst6xB2KXYdfF0bQ&s",
-    category: "Novel",
+    category: "Pendidikan",
   },
   {
     id: "sejarah",
     name: "Sejarah",
     price: 55000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx9XGE_t1NKsbJGm4CzjxFxcE66CyNKIAAew&s",
-    category: "Novel",
+    category: "Pendidikan",
   },
   {
     id: "allah-ada",
     name: "Allah Itu Ada",
     price: 75000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbxjpX6bYzKFuzHYn3T7dD-vpiNU4k4ehSwQ&s0",
-    category: "Novel",
+    category: "Anak",
   },
   {
     id: "marah",
     name: "Marah",
     price: 80000,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVanG5HAbzSj-ESnVp7zpdErFAufVX0wT3g&s",
-    category: "Novel",
+    category: "Anak",
   },
 ];
 
@@ -185,6 +185,8 @@ function checkout() {
   window.location.href = "checkout.html";
 }
 
+
+// batal checkout
 function cancelCheckout() {
   const confirmCancel = confirm("Apakah Anda yakin membatalkan checkout?");
   if (confirmCancel) {
